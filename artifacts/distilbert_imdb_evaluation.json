@@ -1,0 +1,34 @@
+{
+  "accuracy": 0.7866666913032532,
+  "confusion_matrix": [
+    [
+      103,
+      42
+    ],
+    [
+      22,
+      133
+    ]
+  ],
+  "per_class": {
+    "0": {
+      "precision": 0.824,
+      "recall": 0.7103448275862069,
+      "f1": 0.762962962962963,
+      "support": 145
+    },
+    "1": {
+      "precision": 0.76,
+      "recall": 0.8580645161290322,
+      "f1": 0.806060606060606,
+      "support": 155
+    },
+    "macro": {
+      "precision": 0.792,
+      "recall": 0.7842046718576196,
+      "f1": 0.7845117845117845
+    },
+    "accuracy": 0.7866666913032532
+  },
+  "checkpoint": "D:\\Developer\\Projects\\Python\\advanced-deep-learning\\artifacts\\distilbert_imdb_finetuned.pt"
+}

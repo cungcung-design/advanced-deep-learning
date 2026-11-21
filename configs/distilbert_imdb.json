@@ -1,0 +1,17 @@
+{
+    "model_name":  "distilbert-base-uncased",
+    "dataset":  "imdb",
+    "train_size":  1000,
+    "val_size":  150,
+    "test_size":  300,
+    "epochs":  1,
+    "batch_size":  16,
+    "max_length":  128,
+    "learning_rate":  0.00002,
+    "weight_decay":  0.01,
+    "seed":  42,
+    "num_workers":  0,
+    "freeze_backbone":  false,
+    "checkpoint_path":  "artifacts/distilbert_imdb_finetuned.pt",
+    "evaluation_path":  "artifacts/distilbert_imdb_evaluation.json"
+}

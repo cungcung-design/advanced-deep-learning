@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[c]
+*.pyc
+*.pyo
+*.pyd
+.Python
+.env
+.venv/
+env/
+venv/
+.venv
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.egg-info/
+*.egg
+dist/
+build/
+*.mo
+*.pot
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Data and artifacts (not tracked in Git)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+checkpoints/*
+!checkpoints/.gitkeep
+logs/*
+!logs/.gitkeep
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Misc
+*.tmp
+*.log
+frontend/

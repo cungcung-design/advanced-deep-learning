@@ -1,0 +1,14 @@
+{
+    "dataset":  "cifar10",
+    "epochs":  5,
+    "batch_size":  128,
+    "learning_rate":  0.001,
+    "weight_decay":  0.0005,
+    "val_fraction":  0.1,
+    "seed":  42,
+    "num_workers":  0,
+    "checkpoint_path":  "artifacts/cifar10_improved.pt",
+    "evaluation_path":  "artifacts/cifar10_improved_evaluation.json",
+    "scheduler":  "cosine",
+    "model":  "cifar_cnn"
+}
