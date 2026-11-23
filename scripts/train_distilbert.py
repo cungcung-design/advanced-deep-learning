@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.nlp.imdb import TokenizedTextDataset, load_imdb_subsets
+from src.utils.device import get_device
 
 
 def set_seed(seed: int) -> None:
@@ -31,7 +32,7 @@ def main() -> None:
     args = parser.parse_args()
     cfg = json.loads((ROOT / args.config).read_text())
     set_seed(cfg["seed"])
-    device = torch.device("cpu")
+    device = get_device()
     print(f"Device: {device}")
 
     train_raw, val_raw, _ = load_imdb_subsets(cfg["train_size"], cfg["val_size"], cfg["test_size"], cfg["seed"])

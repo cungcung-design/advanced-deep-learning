@@ -135,7 +135,8 @@ def test_tensor_device_placement():
     device = get_device()
     x = torch.tensor([1.0, 2.0, 3.0])
     x_device = x.to(device)
-    assert x_device.device == device
+    assert x_device.device.type == device.type
+    assert x_device.device.index == (device.index if device.index is not None else (0 if device.type == "cuda" else None))
 
 
 def test_model_parameters_have_grad_after_backward():

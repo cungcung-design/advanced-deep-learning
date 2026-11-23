@@ -43,7 +43,7 @@ def test_settings_runtime(client):
     assert r.status_code == 200
     body = r.json()
     assert body["device"] in ("cpu", "cuda")
-    assert body["cuda_available"] is False
+    assert body["cuda_available"] is (body["device"] == "cuda")
     assert body["torch_version"]
 
 
