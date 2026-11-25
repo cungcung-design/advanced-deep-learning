@@ -1,21 +1,58 @@
-const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1").replace(/\/$/, "");
+export const API_BASE = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1").replace(/\/$/, "");
+
+export interface StructuredApiErrorBody {
+  error?: {
+    code?: string;
+    message?: string;
+    details?: Record<string, unknown>;
+  };
+  detail?: unknown;
+}
 
 export class ApiError extends Error {
-  constructor(message: string, public status: number, public detail?: unknown) {
+  public code?: string;
+  public details?: Record<string, unknown>;
+  public isNetworkError: boolean;
+
+  constructor(
+    message: string,
+    public status: number,
+    public detail?: unknown,
+    options?: {
+      code?: string;
+      details?: Record<string, unknown>;
+      isNetworkError?: boolean;
+    },
+  ) {
     super(message);
     this.name = "ApiError";
+    this.code = options?.code;
+    this.details = options?.details;
+    this.isNetworkError = options?.isNetworkError ?? false;
   }
 }
 
 export async function api<T>(path: string, init?: RequestInit): Promise<T> {
-  const response = await fetch(`${API_BASE}${path}`, {
-    ...init,
-    headers: {
-      ...(init?.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
-      ...init?.headers,
-    },
-    cache: "no-store",
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_BASE}${path}`, {
+      ...init,
+      headers: {
+        ...(init?.body instanceof FormData ? {} : { "Content-Type": "application/json" }),
+        ...init?.headers,
+      },
+      cache: "no-store",
+    });
+  } catch (error) {
+    const message =
+      error instanceof Error && error.message
+        ? error.message
+        : "Unable to reach the local backend API";
+    throw new ApiError(message, 0, error, {
+      code: "NETWORK_ERROR",
+      isNetworkError: true,
+    });
+  }
 
   if (!response.ok) {
     let detail: unknown;
@@ -24,11 +61,22 @@ export async function api<T>(path: string, init?: RequestInit): Promise<T> {
     } catch {
       detail = await response.text();
     }
+    const body =
+      typeof detail === "object" && detail !== null
+        ? (detail as StructuredApiErrorBody)
+        : undefined;
+    const code = body?.error?.code;
+    const details = body?.error?.details;
     const message =
-      typeof detail === "object" && detail !== null && "detail" in detail
-        ? String((detail as { detail: unknown }).detail)
-        : `API request failed (${response.status})`;
-    throw new ApiError(message, response.status, detail);
+      body?.error?.message ??
+      (body && "detail" in body && body.detail !== undefined
+        ? String(body.detail)
+        : `API request failed (${response.status})`);
+    throw new ApiError(message, response.status, detail, {
+      code,
+      details,
+      isNetworkError: false,
+    });
   }
 
   return response.json() as Promise<T>;

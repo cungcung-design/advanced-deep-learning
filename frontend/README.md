@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DeepVision AI Studio — Frontend (`frontend/`)
 
-## Getting Started
+Next.js `16.4.6` (App Router, Turbopack), React `19.3.0`, and TypeScript frontend for **DeepVision AI Studio**.
 
-First, run the development server:
+For full project documentation, backend setup, and architecture, see the root [README.md](file:///d:/Developer/Projects/advanced-deep-learning/README.md) and `docs/`.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 1. Environment Configuration
+
+Create `frontend/.env.local` (optional if the FastAPI backend is running at `http://localhost:8000/api/v1`):
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 2. Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run from `frontend/` (on Windows PowerShell, use `npm.cmd`):
 
-## Learn More
+```powershell
+# Install dependencies
+npm.cmd install
 
-To learn more about Next.js, take a look at the following resources:
+# Start development server on http://localhost:3000
+npm.cmd run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Run TypeScript typecheck
+npm.cmd run typecheck
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Run ESLint
+npm.cmd run lint
 
-## Deploy on Vercel
+# Run Vitest unit & component test suite (67 tests across 16 files)
+npm.cmd test
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Clean production build and start production server
+Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue
+npm.cmd run build
+npm.cmd run start -- -p 3000
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 3. Application Routes
+
+- `/` — Dashboard
+- `/datasets` — Datasets Catalog, Split Statistics & Live 5-Check Validation
+- `/training` — Background Model Training Workspace
+- `/evaluation` — Held-Out Model Evaluation & Confusion Matrix Workspace
+- `/playground` — Image Classification AI Playground
+- `/nlp` — NLP Playground (Sentiment, 768-D Embeddings, NER)
+- `/registry` — Model Registry & Artifact Inspector
+- `/settings` — System Health, Readiness, Runtime, Storage & Local Preferences

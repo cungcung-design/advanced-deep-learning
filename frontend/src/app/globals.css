@@ -23,6 +23,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-zinc-500: #8E95A5;
+  --color-zinc-600: #888F9F;
+  --color-zinc-700: #888F9F;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --radius-lg: 1rem;
